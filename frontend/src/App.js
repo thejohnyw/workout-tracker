@@ -1,7 +1,5 @@
-import logo from './logo.svg';
 import axios from 'axios';
 import {useState, useEffect} from 'react';
-import { format } from 'date-fns';
 import './App.css';
 
 
@@ -10,6 +8,7 @@ const baseURL = 'http://127.0.0.1:5000'
 
 function App() {
   const [description, setDescription] = useState("");
+  const [reps, setReps] = useState("");
   const [eventslist, setEventslist] = useState([]);
 
   const fetchEvents = async () => {
@@ -26,15 +25,33 @@ function App() {
     setDescription(e.target.value);
   }
 
+  const handleRepschange = e => {
+    setReps(e.target.value);
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
+    var body = {
+      'description': description,
+      'reps': reps
+    }
     try {
-      const data = await axios.post(`${baseURL}/workout`, {description})
-      axios.post(`${baseURL}/workout`, {description}).then((res) => {
-        console.log(res)
-      })
+      const data = await axios({
+        method: 'post',
+        url: `${baseURL}/workoutpost`,
+        data: body
+    })
+  //   await axios({
+  //     method: 'post',
+  //     url: `${baseURL}/workoutpost`,
+  //     data: body
+  // }).then(res => {
+  //   console.log(res)
+  // })
+
       setEventslist([...eventslist, data.data])
       setDescription('')
+      setReps('')
 
     } catch (err) {
       console.error(err.message)
@@ -68,13 +85,20 @@ function App() {
       <body>
         <section className='enterwrkouts'>
           <form onSubmit={handleSubmit}>
-            <label htmlFor='workout'>Workout</label>
+            <label htmlFor='workouts'>Workout</label>
             <input
               onChange={handleChange}
               type="type"
-              name='workout'
-              id='workout'
+              name='workouts'
+              id='workouts'
               value={description}
+            />
+            <input
+              onChange={handleRepschange}
+              type="type"
+              name='reps'
+              id='reps'
+              value={reps}
             />
             <button className="button" type='submit'>Submit</button>
           </form>
@@ -85,8 +109,9 @@ function App() {
             {eventslist.map(event => {
               return (
                 <li style={{display: "flex"}} key={event.id} className="wrappers">
-                  {event.description}
-                  <button onClick={() => handleDelete(event.id)} className="button">Del</button>
+                  {event.workouts},
+                  {event.reps}
+                  <button onClick={() => handleDelete(event.id)} className="button">X</button>
                 </li>
 
               )
