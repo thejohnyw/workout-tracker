@@ -25,7 +25,7 @@ class Action(db.Model):
 def format_to_json(action):
     return {
         "id": action.id,
-        "workouts": action.workouts,
+        "description": action.workouts,
         "reps": action.reps,
         "create_time": action.create_time
     }
