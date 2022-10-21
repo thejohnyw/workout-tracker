@@ -38,12 +38,12 @@ function App() {
     try {
       const data = await axios({
         method: 'post',
-        url: `${baseURL}/workoutpost`,
+        url: `${baseURL}/workout`,
         data: body
     })
   //   await axios({
   //     method: 'post',
-  //     url: `${baseURL}/workoutpost`,
+  //     url: `${baseURL}/workout`,
   //     data: body
   // }).then(res => {
   //   console.log(res)
@@ -109,7 +109,7 @@ function App() {
             {eventslist.map(event => {
               return (
                 <li style={{display: "flex"}} key={event.id} className="wrappers">
-                  {event.workouts},
+                  {event.description},
                   {event.reps}
                   <button onClick={() => handleDelete(event.id)} className="button">X</button>
                 </li>

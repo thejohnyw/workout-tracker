@@ -42,7 +42,7 @@ def first():
         'occupation': 'NBA'
     }
 
-@app.route("/workoutpost", methods=["POST"])
+@app.route("/workout", methods=["POST"])
 @cross_origin()
 def add():
     workout = request.json["description"]
