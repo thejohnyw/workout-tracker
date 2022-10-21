@@ -77,9 +77,9 @@ def single(id):
     elif request.method == "PUT":
         workout = Action.query.filter_by(id=id)
         replace, rep_replace = request.json['description'], request.json['reps']
-        workout.update(dict(workouts=replace, reps=rep_replace, create_time=datetime.utcnow))
+        workout.update(dict(workouts=replace, reps=rep_replace))
         db.session.commit()
-        return {'Edited Workout': format_to_json(workout.one())}
+        return format_to_json(workout.one())
 
 
 

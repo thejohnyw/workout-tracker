@@ -8,7 +8,10 @@ const baseURL = 'http://127.0.0.1:5000'
 
 function App() {
   const [description, setDescription] = useState("");
+  const [editDes, setEditDes] = useState("");
   const [reps, setReps] = useState("");
+  const [editReps, setEditReps] = useState("");
+  const [editID, setEditID] = useState(null);
   const [eventslist, setEventslist] = useState([]);
 
   const fetchEvents = async () => {
@@ -18,15 +21,28 @@ function App() {
     //console.log("Data: ", data)
       // console.log(description)/* maybe use looping to get desired workouts from all workouts list */
   }
+  useEffect(() => {
+    fetchEvents();
+  }, [])
   
 
 
-  const handleChange = e => {
-    setDescription(e.target.value);
+  const handleChange = (e, edit) => {
+    if (edit) {
+      setEditDes(e.target.value);
+    }
+    else {
+      setDescription(e.target.value);
+    }
   }
 
-  const handleRepschange = e => {
-    setReps(e.target.value);
+  const handleRepschange = (e, edit) => {
+    if (edit) {
+      setEditReps(e.target.value);
+    }
+    else {
+      setReps(e.target.value);
+    }
   }
 
   const handleSubmit = async (e) => {
@@ -35,23 +51,43 @@ function App() {
       'description': description,
       'reps': reps
     }
+    var editBody = {
+      'description': editDes,
+      'reps': editReps
+    }
     try {
-      const data = await axios({
-        method: 'post',
-        url: `${baseURL}/workout`,
-        data: body
-    })
-  //   await axios({
-  //     method: 'post',
-  //     url: `${baseURL}/workout`,
-  //     data: body
-  // }).then(res => {
-  //   console.log(res)
-  // })
+      if (editDes) {
+        const data = await axios({
+          method: 'put',
+          url: `${baseURL}/workout/${editID}`,
+          data: editBody
+      }
+      )
+        const updatedEvent = data.data
+        console.log('update', updatedEvent)
+        const updatedList = eventslist.map(event => {
+          if (event.id == editID) {
+            event = updatedEvent
+          }
+          return event
+        })
+        console.log('setting', updatedList)
+        setEventslist(updatedList)
 
-      setEventslist([...eventslist, data.data])
+      }
+      else {
+        const data = await axios({
+          method: 'post',
+          url: `${baseURL}/workout`,
+          data: body
+      })
+        setEventslist([...eventslist, data.data])
+    }
       setDescription('')
       setReps('')
+      setEditDes('')
+      setEditReps('')
+      setEditID(null)
 
     } catch (err) {
       console.error(err.message)
@@ -68,11 +104,15 @@ function App() {
     }
 
   }
+  const handleEdit = (e) => {
+    setEditID(e.id);
+    setEditDes(e.description);
+    setEditReps(e.reps);
+  }
 
 
-  useEffect(() => {
-    fetchEvents();
-  }, [])
+
+
   //   try {
 
   //   }
@@ -87,17 +127,15 @@ function App() {
           <form onSubmit={handleSubmit}>
             <label htmlFor='workouts'>Workout</label>
             <input
-              onChange={handleChange}
-              type="type"
-              name='workouts'
+              onChange={(e) => handleChange(e, false)}
               id='workouts'
+              placeholder='Workout name'
               value={description}
             />
             <input
-              onChange={handleRepschange}
-              type="type"
-              name='reps'
+              onChange={(e) => handleRepschange(e, false)}
               id='reps'
+              placeholder='How many reps?'
               value={reps}
             />
             <button className="button" type='submit'>Submit</button>
@@ -107,14 +145,36 @@ function App() {
 
           <ul>
             {eventslist.map(event => {
-              return (
-                <li style={{display: "flex"}} key={event.id} className="wrappers">
-                  {event.description},
-                  {event.reps}
-                  <button onClick={() => handleDelete(event.id)} className="button">X</button>
-                </li>
+              if (editID == event.id) {
+                return (
+                  <li>
+                    <form onSubmit={handleSubmit} key={event.id}>
+                    <input
+                      onChange={(e) => handleChange(e, true)}
+                      id='editworkouts'
+                      value={editDes}
+                    />
+                    <input
+                      onChange={(e) => handleRepschange(e, true)}
+                      id='editreps'
+                      value={editReps}
+                    />
+                    <button type='submit'>submit</button>
+                    </form>
+                  </li>
+                )
+              }
+              else {
+                return (
+                  <li style={{display: "flex"}} key={event.id} className="wrappers">
+                    {event.description},
+                    {event.reps}
+                    <button onClick={() => handleEdit(event)} className="button">Edit</button>
+                    <button onClick={() => handleDelete(event.id)} className="button">X</button>
+                  </li>
 
-              )
+                )
+              }
             })}
           </ul>
         </section>
