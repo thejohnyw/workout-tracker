@@ -7,13 +7,15 @@ import './App.css';
 const baseURL = 'http://127.0.0.1:5000'
 
 function App() {
-  const [description, setDescription] = useState("");
-  const [editDes, setEditDes] = useState("");
-  const [reps, setReps] = useState("");
-  const [editReps, setEditReps] = useState("");
-  const [editID, setEditID] = useState(null);
-  const [eventslist, setEventslist] = useState([]);
+  const [description, setDescription] = useState(""); // description of workout
+  const [editDes, setEditDes] = useState(""); // description when editing
+  const [reps, setReps] = useState(""); // reps state
+  const [editReps, setEditReps] = useState(""); // reps state when editing
+  const [editID, setEditID] = useState(null); // id of event user wants to edit
+  const [eventslist, setEventslist] = useState([]); // state of workouts+reps
 
+
+  // fetching and setting state of data from flask backend
   const fetchEvents = async () => {
     const data = await axios.get(`${baseURL}/workout`)
     const { events } = data.data
@@ -26,16 +28,16 @@ function App() {
   }, [])
   
 
-
+  // handling text change for workout input
   const handleChange = (e, edit) => {
-    if (edit) {
+    if (edit) { // if editing is true
       setEditDes(e.target.value);
     }
     else {
       setDescription(e.target.value);
     }
   }
-
+// handling text change for reps input
   const handleRepschange = (e, edit) => {
     if (edit) {
       setEditReps(e.target.value);
@@ -44,7 +46,7 @@ function App() {
       setReps(e.target.value);
     }
   }
-
+  // handling submitting and editing
   const handleSubmit = async (e) => {
     e.preventDefault()
     var body = {
@@ -56,7 +58,7 @@ function App() {
       'reps': editReps
     }
     try {
-      if (editDes) {
+      if (editDes) { // if editing then use put method, and set state of events to updated edits
         const data = await axios({
           method: 'put',
           url: `${baseURL}/workout/${editID}`,
@@ -66,7 +68,7 @@ function App() {
         const updatedEvent = data.data
         console.log('update', updatedEvent)
         const updatedList = eventslist.map(event => {
-          if (event.id == editID) {
+          if (event.id == editID) { // editing specified event
             event = updatedEvent
           }
           return event
@@ -75,14 +77,18 @@ function App() {
         setEventslist(updatedList)
 
       }
-      else {
-        const data = await axios({
-          method: 'post',
-          url: `${baseURL}/workout`,
-          data: body
-      })
-        setEventslist([...eventslist, data.data])
-    }
+      else { // if not editing (submitting new workout)
+        
+        if (description) { // only allows new workout if user enters a workout description
+          const data = await axios({
+            method: 'post',
+            url: `${baseURL}/workout`,
+            data: body
+          })
+          setEventslist([...eventslist, data.data])
+        }
+    } 
+    // setting everything back to empty
       setDescription('')
       setReps('')
       setEditDes('')
@@ -93,7 +99,7 @@ function App() {
       console.error(err.message)
     }
   }
-
+  // deleting specified event
   const handleDelete = async (id) => {
     try {
       await axios.delete(`${baseURL}/workout/${id}`)
@@ -104,6 +110,7 @@ function App() {
     }
 
   }
+  // toggling edit mode
   const handleEdit = (e) => {
     setEditID(e.id);
     setEditDes(e.description);
