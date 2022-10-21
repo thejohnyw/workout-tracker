@@ -1,19 +1,22 @@
 import axios from 'axios';
 import {useState, useEffect} from 'react';
 import './App.css';
+import {format} from "date-fns";
+import Graphs from './components/graphs';
 
 
-
-const baseURL = 'http://127.0.0.1:5000'
+const baseURL = 'http://127.0.0.1:5000' //flask backend baseURL
 
 function App() {
-  const [description, setDescription] = useState(""); // description of workout
-  const [editDes, setEditDes] = useState(""); // description when editing
-  const [reps, setReps] = useState(""); // reps state
+  const [description, setDescription] = useState(""); // state of description of workout
+  const [editDes, setEditDes] = useState(""); // state of description when editing
+  const [reps, setReps] = useState(""); // state of reps of workout
   const [editReps, setEditReps] = useState(""); // reps state when editing
-  const [editID, setEditID] = useState(null); // id of event user wants to edit
+  const [editID, setEditID] = useState(null); // state of id of event user wants to edit
   const [eventslist, setEventslist] = useState([]); // state of workouts+reps
-
+  const [graph, setGraph] = useState([{x:0, y:0}]);
+  const [x_val, setX_val] = useState(1)// x axis is create time; y is 
+  const [y_val, setY_val] = useState(1)
 
   // fetching and setting state of data from flask backend
   const fetchEvents = async () => {
@@ -49,44 +52,45 @@ function App() {
   // handling submitting and editing
   const handleSubmit = async (e) => {
     e.preventDefault()
-    var body = {
+    const body = {
       'description': description,
       'reps': reps
     }
-    var editBody = {
+    const editBody = {
       'description': editDes,
       'reps': editReps
     }
     try {
       if (editDes) { // if editing then use put method, and set state of events to updated edits
+        // editing backend 
         const data = await axios({
           method: 'put',
           url: `${baseURL}/workout/${editID}`,
           data: editBody
-      }
-      )
+      })
         const updatedEvent = data.data
-        console.log('update', updatedEvent)
         const updatedList = eventslist.map(event => {
           if (event.id == editID) { // editing specified event
             event = updatedEvent
           }
           return event
         })
-        console.log('setting', updatedList)
         setEventslist(updatedList)
 
-      }
-      else { // if not editing (submitting new workout)
+      } else { // if not editing (submitting new workout)
         
-        if (description) { // only allows new workout if user enters a workout description
-          const data = await axios({
-            method: 'post',
-            url: `${baseURL}/workout`,
-            data: body
-          })
-          setEventslist([...eventslist, data.data])
-        }
+          if (description) { // only allows new workout if user enters a workout description
+            // posting to backend
+            const data = await axios({
+              method: 'post',
+              url: `${baseURL}/workout`,
+              data: body
+            })
+            setEventslist([...eventslist, data.data])
+            setGraph([...graph, {x: x_val, y: y_val}])
+            setX_val((x_val) => x_val+1)
+            setY_val((y_val) => y_val+1)
+          }
     } 
     // setting everything back to empty
       setDescription('')
@@ -105,6 +109,8 @@ function App() {
       await axios.delete(`${baseURL}/workout/${id}`)
       const newList = eventslist.filter(event => event.id !== id)
       setEventslist(newList)
+      setY_val((y_val) => y_val+1)
+      setGraph([...graph, {x: x_val, y: y_val}])
     } catch (err) {
       console.log(err.message)
     }
@@ -117,14 +123,6 @@ function App() {
     setEditReps(e.reps);
   }
 
-
-
-
-  //   try {
-
-  //   }
-
-  // }
 
 
   return (
@@ -188,9 +186,9 @@ function App() {
 
         
       </body>
+      <Graphs chartData={graph}/>
     </div>
   );
 
         }
 export default App;
-

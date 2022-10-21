@@ -1,4 +1,9 @@
-
+'''
+Author: John Wang
+file: server.py
+Oct, 2022
+Purpose: backend of full-stack web app
+'''
 from flask import Flask, json, request, session, redirect, render_template, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
