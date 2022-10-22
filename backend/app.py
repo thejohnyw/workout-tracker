@@ -1,6 +1,6 @@
 '''
 Author: John Wang
-file: server.py
+file: app.py
 Oct, 2022
 Purpose: backend of full-stack web app
 '''
