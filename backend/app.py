@@ -13,7 +13,7 @@ from flask_cors import CORS
 app = Flask(__name__) # Configuring web app and templates with Flask
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://kaswwsnrhvmuky:6bdc9cf2e1258c986450177327d385210fc5045c14d7dd1d7e059037ff8f38fc@ec2-35-170-146-54.compute-1.amazonaws.com:5432/d75bbdnufgb4ru' #Configuring PostgreSQL database with web app
 db = SQLAlchemy(app) #initalizing database
-cors = CORS(app) #allows react (localhost:3000) to access flask app (localhost:5000)
+cors = CORS(app, origins=["http://localhost:3000", "https://workout-watcher.me", "https://workout-watcher.netlify.app"]) #allows react (localhost:3000/deployed sites) to access flask app (localhost:5000)
 
 class Action(db.Model): #setup of database
     __tablename__ = "Workouts and Reps"
