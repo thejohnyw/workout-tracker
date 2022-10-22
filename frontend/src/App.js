@@ -11,7 +11,7 @@ import {
 import { Link }  from "react-router-dom"
 
 
-const baseURL = 'http://127.0.0.1:5000' //flask backend baseURL
+const baseURL = 'https://workout-watcher.herokuapp.com' //flask backend baseURL
 
 function App() {
   const [description, setDescription] = useState(""); // state of description of workout
