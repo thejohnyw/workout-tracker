@@ -35,7 +35,7 @@ function App() {
   }
   useEffect(() => {
     fetchEvents();
-  }, [])
+  }) //fetches events and updates graph every render
   
 
   // handling text change for workout input
@@ -95,7 +95,6 @@ function App() {
             setEventslist([...eventslist, data.data])
             setX_val((x_val) => x_val+1)
             setY_val((y_val) => y_val+1)
-            setGraph([...graph, {x: x_val, y: y_val}])
           }
     } 
     // setting everything back to empty
@@ -116,7 +115,6 @@ function App() {
       const newList = eventslist.filter(event => event.id !== id)
       setEventslist(newList)
       setY_val((y_val) => y_val-1)
-      setGraph([...graph, {x: x_val, y: y_val}])
     } catch (err) {
       console.log(err.message)
     }

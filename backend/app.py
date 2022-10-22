@@ -10,7 +10,7 @@ from datetime import datetime
 from flask_cors import CORS
 
 
-#link to access backend: https://workout-watcher.herokuapp.com/
+#link to access backend: https://workout-watcher.herokuapp.com/workout
 
 app = Flask(__name__) # Configuring web app and templates with Flask
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://kaswwsnrhvmuky:6bdc9cf2e1258c986450177327d385210fc5045c14d7dd1d7e059037ff8f38fc@ec2-35-170-146-54.compute-1.amazonaws.com:5432/d75bbdnufgb4ru' #Configuring PostgreSQL database with web app
@@ -27,6 +27,8 @@ class Action(db.Model): #setup of database
     def __init__(self, workouts, reps):
         self.workouts = workouts
         self.reps = reps
+
+
 
 
 def format_to_json(action):
