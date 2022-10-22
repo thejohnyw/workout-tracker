@@ -8,11 +8,12 @@ from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from flask_cors import CORS
+#link: https://workout-watcher.herokuapp.com/
 
 app = Flask(__name__) # Configuring web app and templates with Flask
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:123@localhost/workoutrepsdatabase' #Configuring PostgreSQL database with web app
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://cjxqkhkgqanfsf:fd9a8c2f4a59d0b96516868fb7905e77f3a05bf81c0331d742f0ed18fae70a3e@ec2-35-170-146-54.compute-1.amazonaws.com:5432/d84r0m941h8vc2' #Configuring PostgreSQL database with web app
 db = SQLAlchemy(app) #initalizing database
-cors = CORS(app) #allows react (localhost:3000) to access flask app (localhost:5000)
+#cors = CORS(app) #allows react (localhost:3000) to access flask app (localhost:5000)
 
 class Action(db.Model): #setup of database
     __tablename__ = "Workouts and Reps"
