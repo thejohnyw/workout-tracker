@@ -1,8 +1,14 @@
+//
 import axios from 'axios';
 import {useState, useEffect} from 'react';
 import './App.css';
-import {format} from "date-fns";
 import Graphs from './components/graphs';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+ } from "react-router-dom";
+import { Link }  from "react-router-dom"
 
 
 const baseURL = 'http://127.0.0.1:5000' //flask backend baseURL
@@ -15,7 +21,7 @@ function App() {
   const [editID, setEditID] = useState(null); // state of id of event user wants to edit
   const [eventslist, setEventslist] = useState([]); // state of workouts+reps
   const [graph, setGraph] = useState([{x:0, y:0}]);
-  const [x_val, setX_val] = useState(1)// x axis is create time; y is 
+  const [x_val, setX_val] = useState(1)
   const [y_val, setY_val] = useState(1)
 
   // fetching and setting state of data from flask backend
@@ -23,6 +29,7 @@ function App() {
     const data = await axios.get(`${baseURL}/workout`)
     const { events } = data.data
     setEventslist(events);
+    setGraph([...graph, {x: x_val, y: y_val}])
     //console.log("Data: ", data)
       // console.log(description)/* maybe use looping to get desired workouts from all workouts list */
   }
@@ -61,9 +68,8 @@ function App() {
       'reps': editReps
     }
     try {
-      if (editDes) { // if editing then use put method, and set state of events to updated edits
-        // editing backend 
-        const data = await axios({
+      if (editDes) { // if editing then use put method, and set state of events to updated edits 
+        const data = await axios({ //editing backend database
           method: 'put',
           url: `${baseURL}/workout/${editID}`,
           data: editBody
@@ -87,9 +93,9 @@ function App() {
               data: body
             })
             setEventslist([...eventslist, data.data])
-            setGraph([...graph, {x: x_val, y: y_val}])
             setX_val((x_val) => x_val+1)
             setY_val((y_val) => y_val+1)
+            setGraph([...graph, {x: x_val, y: y_val}])
           }
     } 
     // setting everything back to empty
@@ -109,7 +115,7 @@ function App() {
       await axios.delete(`${baseURL}/workout/${id}`)
       const newList = eventslist.filter(event => event.id !== id)
       setEventslist(newList)
-      setY_val((y_val) => y_val+1)
+      setY_val((y_val) => y_val-1)
       setGraph([...graph, {x: x_val, y: y_val}])
     } catch (err) {
       console.log(err.message)
@@ -186,7 +192,19 @@ function App() {
 
         
       </body>
-      <Graphs chartData={graph}/>
+      
+      <Router>
+        <nav>
+            <ul>
+              <li><Link to="/graph">Graph</Link></li>
+              
+            </ul>
+        </nav>
+        <Routes>
+            <Route path='/graph' element={<Graphs chartData={graph} />} />
+        </Routes>
+      </Router>
+      
     </div>
   );
 

@@ -1,3 +1,6 @@
+// graph component of React Frontend
+
+
 import React, {Component} from 'react';
 import {
     XYPlot,
@@ -19,12 +22,12 @@ class Graphs extends Component{
     render (){
         return (
             <div>
-                <XYPlot xType="linear" width={300} height={300}>
+                <XYPlot xType="linear" width={400} height={400}>
                     <HorizontalGridLines />
                     <VerticalGridLines />
                     <XAxis title="X Axis" />
                     <YAxis title="Y Axis" />
-                    <LineSeries data={this.props.chartData} />
+                    <LineSeries data={this.props.chartData} style={{ fill: 'none' }}/>
                 </XYPlot>
             </div>
         )

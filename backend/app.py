@@ -4,18 +4,17 @@ file: server.py
 Oct, 2022
 Purpose: backend of full-stack web app
 '''
-from flask import Flask, json, request, session, redirect, render_template, flash
+from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 
 app = Flask(__name__) # Configuring web app and templates with Flask
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:123@localhost/workoutrepsdatabase' #Configuring PostgreSQL database with web app
 db = SQLAlchemy(app) #initalizing database
 cors = CORS(app) #allows react (localhost:3000) to access flask app (localhost:5000)
-app.config['CORS_HEADERS'] = 'Content-Type'
 
-class Action(db.Model):
+class Action(db.Model): #setup of database
     __tablename__ = "Workouts and Reps"
     id = db.Column(db.Integer, primary_key=True)
     workouts = db.Column(db.String(50), nullable=False)
@@ -35,21 +34,10 @@ def format_to_json(action):
         "create_time": action.create_time
     }
 
-@app.route('/')
-def tru():
-    return "hello"
 
-
-@app.route('/test/')
-def first():
-    return {
-        'name': 'book',
-        'occupation': 'NBA'
-    }
-
+#adding new workout
 @app.route("/workout", methods=["POST"])
-@cross_origin()
-def add():
+def add_workout():
     workout = request.json["description"]
     reps = request.json["reps"] 
     action = Action(workout, reps)
@@ -57,7 +45,8 @@ def add():
     db.session.commit()
     return format_to_json(action)
 
-#all workouts
+
+#get all workouts
 @app.route("/workout", methods=["GET"])
 def get_workouts():
     workouts = Action.query.order_by(Action.id.asc()).all()
@@ -68,13 +57,12 @@ def get_workouts():
 
 
 
-#single workout: selecting, deleting, and editing workout
+#selecting, deleting, and editing workout
 @app.route("/workout/<id>", methods=["GET", "PUT", "DELETE"])
 def single(id):
     workout = Action.query.filter_by(id=id).one()
-    json_format = format_to_json(workout)
     if request.method == "GET":
-        return {'Workout': json_format}
+        return format_to_json(workout)
     elif request.method == "DELETE":
         db.session.delete(workout)
         db.session.commit()
