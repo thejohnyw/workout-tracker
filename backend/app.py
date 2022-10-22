@@ -1,7 +1,7 @@
 '''
 Author: John Wang
 file: app.py
-Oct, 2022
+Aug-Oct, 2022
 Purpose: backend of full-stack web app
 '''
 from flask import Flask, request
