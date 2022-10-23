@@ -1,6 +1,5 @@
 // graph component of React Frontend
 
-
 import React, {Component} from 'react';
 import {
     XYPlot,
