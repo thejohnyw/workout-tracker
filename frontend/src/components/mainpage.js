@@ -68,9 +68,9 @@ const Mainpage = () => {
           })
 
             const updatedEvent = data.data
-            const updatedList = eventslist.map(event => {
-              if (event.id === editID) { // editing specified event
-                event = updatedEvent
+            const updatedList = eventslist.map(event => {// editing specified event
+              if (event.id === editID) { 
+                event = updatedEvent // changing old event to updated event
               }
               return event
             })
@@ -78,14 +78,14 @@ const Mainpage = () => {
     
           } else { // if not editing (submitting new workout)
             
-              if (description) { // only allows new workout if user enters a workout description
-                // posting to backend
-                const data = await axios({
+              if (description) { // only allows new workout if user enters something for workout description
+                
+                const data = await axios({ // posting data to backend
                   method: 'post',
                   url: `${baseURL}/workout`,
                   data: body
                 })
-                setEventslist([...eventslist, data.data]) // appending data to eventslist
+                setEventslist([...eventslist, data.data]) // adding new data to eventslist
                 setX_val((x_val) => x_val+1) // increasing slope of graph when adding a new workout
                 setY_val((y_val) => y_val+1)
               }
