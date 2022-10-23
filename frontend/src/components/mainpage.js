@@ -60,11 +60,13 @@ const Mainpage = () => {
         try {
 
           if (editDes) { // if editing then use put method, and set state of events to updated edits 
+
             const data = await axios({ //editing backend database
               method: 'put',
               url: `${baseURL}/workout/${editID}`,
               data: editBody
           })
+
             const updatedEvent = data.data
             const updatedList = eventslist.map(event => {
               if (event.id === editID) { // editing specified event
@@ -72,7 +74,7 @@ const Mainpage = () => {
               }
               return event
             })
-            setEventslist(updatedList)
+            setEventslist(updatedList) // setting edited/updated event
     
           } else { // if not editing (submitting new workout)
             
@@ -83,8 +85,8 @@ const Mainpage = () => {
                   url: `${baseURL}/workout`,
                   data: body
                 })
-                setEventslist([...eventslist, data.data])
-                setX_val((x_val) => x_val+1)
+                setEventslist([...eventslist, data.data]) // appending data to eventslist
+                setX_val((x_val) => x_val+1) // increasing slope of graph when adding a new workout
                 setY_val((y_val) => y_val+1)
               }
         } 
@@ -103,9 +105,9 @@ const Mainpage = () => {
       const handleDelete = async (id) => {
         try {
           await axios.delete(`${baseURL}/workout/${id}`)
-          const newList = eventslist.filter(event => event.id !== id)
+          const newList = eventslist.filter(event => event.id !== id) // filtering out deleted event
           setEventslist(newList)
-          setY_val((y_val) => y_val-1)
+          setY_val((y_val) => y_val-1) // decreases slope of graph when deleting workout
         } catch (err) {
           console.log(err.message)
         }
@@ -122,7 +124,7 @@ const Mainpage = () => {
     
       return (
         <div className='App'>
-          <body>
+          <main>
             <section className='enterwrkouts'>
               <form onSubmit={handleSubmit}>
                 <label htmlFor='workouts'>Workout</label>
@@ -179,7 +181,7 @@ const Mainpage = () => {
               </ul>
             </section>
     
-          </body>
+          </main>
 
          <Graphs chartData={graph} />
           
