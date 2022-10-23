@@ -1,4 +1,4 @@
-// graph component of React Frontend
+// graph component of React Frontend (class component)
 
 import React, {Component} from 'react';
 import {

@@ -49,14 +49,14 @@ body{
   align-self: center;
 }
 
-.wrappers {
-  display:inline-block;
+.wrappers{
+  text-align: center;
   clear: both;
   padding: 20px;
   border-radius: 30px;
   margin-bottom: 2px;
   font-family: Helvetica, Arial, sans-serif;
-}
+} 
 
 @keyframes App-logo-spin {
   from {

@@ -1,4 +1,4 @@
-// Mainpage
+// Mainpage component (functional component)
 import axios from 'axios';
 import {useState, useEffect} from 'react';
 import Graphs from './graphs';
@@ -67,7 +67,7 @@ const Mainpage = () => {
           })
             const updatedEvent = data.data
             const updatedList = eventslist.map(event => {
-              if (event.id == editID) { // editing specified event
+              if (event.id === editID) { // editing specified event
                 event = updatedEvent
               }
               return event
@@ -145,7 +145,7 @@ const Mainpage = () => {
     
               <ul>
                 {eventslist.map(event => {
-                  if (editID == event.id) {
+                  if (editID === event.id) {
                     return (
                       <li>
                         <form onSubmit={handleSubmit} key={event.id}>
@@ -166,7 +166,7 @@ const Mainpage = () => {
                   }
                   else {
                     return (
-                      <li style={{display: "flex"}} key={event.id} className="wrappers">
+                      <li key={event.id} className="wrappers">
                         {event.description},
                         {event.reps}
                         <button onClick={() => handleEdit(event)} className="button">Edit</button>
