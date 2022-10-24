@@ -1,12 +1,11 @@
 
 
-main{
+body{
   background-color: lightblue;
 }
 
 .App{
   text-align: center;
-  background-color: lightblue;
 }
 .App-logo {
   height: 40vmin;
@@ -36,20 +35,30 @@ main{
 
 
 
-
-
-.button{
-  height: 40px;
-  width: 60px;
-  font-size: 15px;
-  font-weight: bold;
-  border-radius: 10px;
+.inputs{
+  padding: 0;
+  height: 30px;
+  position: relative;
+  left: 0;
+  outline: none;
+  border: 1px solid #cdcdcd;
+  border-color: rgba(0, 0, 0, .15);
   background-color: white;
-  border-style: none;
-  align-self: center;
+  font-size: 16px;
 }
 
-.wrappers{
+.button{
+  background-color: mediumseagreen;
+  color: khaki;
+  font: bolder 1.0em Tahoma;
+  border: 1px solid Yellow;
+ padding: 2px;
+}
+.button:hover{
+border: 1px solid blue;   
+}
+
+.eventbubbles{
   text-align: center;
   clear: both;
   padding: 20px;

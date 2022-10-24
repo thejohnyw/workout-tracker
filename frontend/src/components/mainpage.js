@@ -11,15 +11,15 @@ const Mainpage = () => {
     const [editReps, setEditReps] = useState(""); // reps state when editing
     const [editID, setEditID] = useState(null); // state of id of event user wants to edit
     const [eventslist, setEventslist] = useState([]); // state of workouts+reps
-    const [graph, setGraph] = useState([{x:0, y:0}]);
-    const [x_val, setX_val] = useState(1);
-    const [y_val, setY_val] = useState(1);
+    const [graph, setGraph] = useState([{x:0, y:0}]); // graph data to be inputted as prop to Graph component
+    const [x_val, setX_val] = useState(1); // x values of graph coordinates
+    const [y_val, setY_val] = useState(1); // y value of coordinates
 
     const fetchEvents = async () => {
         const data = await axios.get(`${baseURL}/workout`)
         const { events } = data.data
-        setEventslist(events);
-        setGraph([...graph, {x: x_val, y: y_val}])
+        setEventslist(events); // setting events to data from backend
+        setGraph([...graph, {x: x_val, y: y_val}]) // appending new coordinates (x,y) to graph data list
         //console.log("Data: ", data)
           // console.log(description)/* maybe use looping to get desired workouts from all workouts list */
       }
@@ -90,7 +90,7 @@ const Mainpage = () => {
                 setY_val((y_val) => y_val+1)
               }
         } 
-        // setting everything back to empty
+        // setting everything back to default
           setDescription('')
           setReps('')
           setEditDes('')
@@ -124,27 +124,27 @@ const Mainpage = () => {
     
       return (
         <div className='App'>
-          <main>
             <section className='enterwrkouts'>
               <form onSubmit={handleSubmit}>
-                <label htmlFor='workouts'>Workout</label>
+                <label htmlFor='workouts' >Workout <br /> </label>
                 <input
                   onChange={(e) => handleChange(e, false)}
                   id='workouts'
                   placeholder='Workout name'
                   value={description}
+                  className='inputs'
                 />
                 <input
                   onChange={(e) => handleRepschange(e, false)}
                   id='reps'
                   placeholder='How many reps?'
                   value={reps}
+                  className='inputs'
                 />
                 <button className="button" type='submit'>Submit</button>
               </form>
             </section>
-            <section className='notes' >
-    
+            <section className='editing' >
               <ul>
                 {eventslist.map(event => {
                   if (editID === event.id) {
@@ -155,20 +155,22 @@ const Mainpage = () => {
                           onChange={(e) => handleChange(e, true)}
                           id='editworkouts'
                           value={editDes}
+                          className='inputs'
                         />
                         <input
                           onChange={(e) => handleRepschange(e, true)}
                           id='editreps'
                           value={editReps}
+                          className='inputs'
                         />
-                        <button type='submit'>submit</button>
+                        <button className='button' type='submit'>submit</button>
                         </form>
                       </li>
                     )
                   }
                   else {
                     return (
-                      <li key={event.id} className="wrappers">
+                      <li key={event.uniqueid} className="eventbubbles">
                         {event.description},
                         {event.reps}
                         <button onClick={() => handleEdit(event)} className="button">Edit</button>
@@ -180,11 +182,9 @@ const Mainpage = () => {
                 })}
               </ul>
             </section>
-    
-          </main>
+  
 
-         <Graphs chartData={graph} />
-          
+            <Graphs chartData={graph} />
         </div>
       );
 }
