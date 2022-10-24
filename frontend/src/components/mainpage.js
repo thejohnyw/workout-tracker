@@ -13,7 +13,8 @@ const Mainpage = () => {
     const [eventslist, setEventslist] = useState([]); // state of workouts+reps
     const [graph, setGraph] = useState([{x:0, y:0}]); // graph data to be inputted as prop to Graph component
     const [x_val, setX_val] = useState(1); // x values of graph coordinates
-    const [y_val, setY_val] = useState(1); // y value of coordinates
+    const [y_val, setY_val] = useState(1); // y value of coxordinates
+    const [showgraph, setShowgraph] = useState(false) //boolean on whether to display graph or not (based on click)
 
     const fetchEvents = async () => {
         const data = await axios.get(`${baseURL}/workout`)
@@ -119,6 +120,12 @@ const Mainpage = () => {
         setEditDes(e.description);
         setEditReps(e.reps);
       }
+      
+      // toggling showing of graph
+      const handleClick = () => {
+        setShowgraph(curr => !curr);
+      }
+
     
     
     
@@ -183,8 +190,9 @@ const Mainpage = () => {
               </ul>
             </section>
   
-
-            <Graphs chartData={graph} />
+            <button onClick={handleClick} className='button'>Show Graph</button>
+            {showgraph && <Graphs chartData={graph} />}
+            
         </div>
       );
 }
