@@ -1,4 +1,4 @@
-# Workout Watcher Full stack web app
+# Workout Watcher Full Stack Web App!
 
 This site is fully deployed.
 
@@ -29,7 +29,7 @@ Clone the repo
     pip3 install -r requirements.txt
       
   If you want to run your own local database instead of the deployed Postgres on Heroku,
-  change DATABASE_URL to your database credentials. You need my .env file if you want to run the backend to connect with my Heroku Postgres Database.
+  change DATABASE_URL to your database credentials. **You need my .env file if you want to run the backend to connect with my Heroku Postgres Database.**
   
  Afterwards
  
