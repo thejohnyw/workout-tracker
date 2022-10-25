@@ -57,6 +57,13 @@ body{
 .button:hover{
 border: 1px solid blue;   
 }
+.prettytext{
+  color: #4b0855;
+  font-family: 'Source Sans Pro', sans-serif; 
+  font-size: 18px; 
+  line-height: 32px; 
+  margin: 0 0 24px;
+}
 
 .eventbubbles{
   text-align: center;

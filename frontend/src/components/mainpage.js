@@ -13,7 +13,7 @@ const Mainpage = () => {
     const [eventslist, setEventslist] = useState([]); // state of workouts+reps
     const [graph, setGraph] = useState([{x:0, y:0}]); // graph data to be inputted as prop to Graph component
     const [x_val, setX_val] = useState(1); // x values of graph coordinates
-    const [y_val, setY_val] = useState(1); // y value of coxordinates
+    const [y_val, setY_val] = useState(1); // y value of coordinates
     const [showgraph, setShowgraph] = useState(false) //boolean on whether to display graph or not (based on click)
 
     const fetchEvents = async () => {
@@ -122,17 +122,17 @@ const Mainpage = () => {
       }
       
       // toggling showing of graph
-      const handleClick = () => {
+      const handleShowgraph = () => {
         setShowgraph(curr => !curr);
       }
 
-    
     
     
       return (
         <div className='App'>
             <section className='enterwrkouts'>
               <form onSubmit={handleSubmit}>
+                <p className='prettytext'>Enter Workouts You Intend to Do! Hit Done when you completed them!</p>
                 <label htmlFor='workouts' >Workout <br /> </label>
                 <input
                   onChange={(e) => handleChange(e, false)}
@@ -181,7 +181,7 @@ const Mainpage = () => {
                         {event.description},
                         {event.reps}
                         <button onClick={() => handleEdit(event)} className="button">Edit</button>
-                        <button onClick={() => handleDelete(event.id)} className="button">X</button>
+                        <button onClick={() => handleDelete(event.id)} className="button">Done</button>
                       </li>
     
                     )
@@ -189,8 +189,8 @@ const Mainpage = () => {
                 })}
               </ul>
             </section>
-  
-            <button onClick={handleClick} className='button'>Show Graph</button>
+            <p className='prettytext'>Graph visualizes the workouts you create and complete! Try to make it go up then straight down!</p>
+            <button onClick={handleShowgraph} className='button'>Show Graph</button>
             {showgraph && <Graphs chartData={graph} />}
             
         </div>

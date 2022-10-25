@@ -14,7 +14,7 @@ class Graphs extends Component{
 
     constructor(props){
         super(props);
-        this.state = {} // do num of workouts done in a day
+        this.state = {} 
     }
     
 
