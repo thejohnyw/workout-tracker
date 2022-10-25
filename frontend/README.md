@@ -12,5 +12,3 @@ Start the site!
 
     yarn start
       
- 
- HOW WEBSITE WORKS
