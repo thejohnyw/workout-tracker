@@ -5,7 +5,7 @@ This site is fully deployed.
 The backend CRUD API (Flask+PostgreSQL) is hosted on Heroku: https://workout-watcher.herokuapp.com
 Note: There's no home page for backend so to access JSON data: https://workout-watcher.herokuapp.com/workout
 
-The frontend (React) is deployed on Netlify: https://workout-watcher.me/ , https://workout-watcher.netlify.app/ ; It makes request calls to the backend on Heroku
+The frontend (React) is deployed on Netlify: https://workout-watcher.me/ , https://workout-watcher.netlify.app/ ; It makes requests to the backend on Heroku
 
 TO RUN LOCALLY:
 
