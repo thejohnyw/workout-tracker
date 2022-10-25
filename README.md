@@ -1,4 +1,4 @@
-# workout watcher Full stack web app
+# Workout Watcher Full stack web app
 
 This site is fully deployed.
 
@@ -7,7 +7,7 @@ Note: There's no home page for backend so to access JSON data, go here: https://
 
 The frontend (React) is deployed on Netlify: https://workout-watcher.me/ , https://workout-watcher.netlify.app/ ; It makes requests to the backend on Heroku.
 
-TO RUN LOCALLY:
+## TO RUN LOCALLY:
 
 Firstly, change directory to where you want to download
    
@@ -17,9 +17,8 @@ Clone the repo
 
     git clone https://github.com/thejohnyw/workout-watcher.me.git
 
-.
 
-TO RUN BACKEND
+### TO RUN BACKEND:
 
   There's little need to run the backend but to do so, 
   
@@ -40,9 +39,8 @@ TO RUN BACKEND
  
     python3 dbcreate.py
     
- .
  
- HOW TO RUN FRONTEND
+ ### HOW TO RUN FRONTEND:
  
  First make sure the baseURL in frontend/src/components/mainpage.js is the backend link you want incase you want to run the localhost backend; it is defaulted to deployed one on Heroku
  
