@@ -132,7 +132,7 @@ const Mainpage = () => {
         <div className='App'>
             <section className='enterwrkouts'>
               <form onSubmit={handleSubmit}>
-                <p className='prettytext'>Enter Workouts You Intend to Do! Hit Done when you completed them!</p>
+                <p className='prettytext'>Enter Workouts You Intend to Do! Hit Done when you complete them!</p>
                 <label htmlFor='workouts' >Workout <br /> </label>
                 <input
                   onChange={(e) => handleChange(e, false)}
