@@ -55,6 +55,14 @@ Start the site!
     yarn start
       
  
- HOW WEBSITE WORKS
+ ## HOW WEBSITE WORKS Video Demo
   
-  
+
+https://user-images.githubusercontent.com/114613919/197926407-de5f2399-5cdf-4308-a63d-55dc06945895.mov
+
+SCREENSHOT OF SAMPLE DATA FROM BACKEND
+
+<img width="1512" alt="Screenshot 2022-10-25 at 11 14 43 PM" src="https://user-images.githubusercontent.com/114613919/197926467-ea798288-6490-4a7f-b3e7-aa2c3c442ef1.png">
+
+
+
