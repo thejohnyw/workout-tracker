@@ -7,6 +7,9 @@ Note: There's no home page for backend so to access JSON data, go here: https://
 
 The frontend (React) is deployed on Netlify: https://workout-watcher.me/ , https://workout-watcher.netlify.app/ ; It makes requests to the backend on Heroku.
 
+**The main backend code is in app.py**
+
+**The main frontend code is in src/components: mainpage.js and graph.js**
 ## TO RUN LOCALLY:
 
 Firstly, change directory to where you want to download
