@@ -17,7 +17,9 @@ Clone the repo
 
     git clone https://github.com/thejohnyw/workout-watcher.me.git
 
+CD to repo
 
+    cd workout-watcher.me
 ### TO RUN BACKEND:
 
   There's little need to run the backend but to do so, 
