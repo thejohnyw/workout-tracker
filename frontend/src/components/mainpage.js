@@ -21,8 +21,6 @@ const Mainpage = () => {
         const { events } = data.data
         setEventslist(events); // setting events to data from backend
         setGraph([...graph, {x: x_val, y: y_val}]) // appending new coordinates (x,y) to graph data list
-        //console.log("Data: ", data)
-          // console.log(description)/* maybe use looping to get desired workouts from all workouts list */
       }
       useEffect(() => {
         fetchEvents();
