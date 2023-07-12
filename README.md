@@ -1,6 +1,6 @@
 # Workout Watcher Full Stack Web App!
 
-This site is fully deployed.
+This site is fully deployed. Since Heroku removed hosting, the site's backend will no longer take API requests.
 
 The backend CRUD API (Flask+PostgreSQL) is hosted on Heroku: https://workout-watcher.herokuapp.com
 Note: There's no home page for backend so to access JSON data, go here: https://workout-watcher.herokuapp.com/workout
